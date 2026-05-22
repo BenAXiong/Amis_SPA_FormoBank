@@ -58,3 +58,14 @@ and stores the concrete runtime checkpoint in feedback rows.
 ## Vercel
 
 Deploy after Supabase and inference are verified. Configure the same env vars in Vercel project settings. Do not expose `SUPABASE_SERVICE_ROLE_KEY` or `INFERENCE_API_KEY` with a `NEXT_PUBLIC_` prefix.
+
+Current Vercel project settings:
+
+- Framework preset: Next.js
+- Root directory: `apps/web`
+- Build command: `pnpm build`
+- Install command: `pnpm install`
+- Production URL: `https://amis-mandarin-mt-review-demo.vercel.app`
+
+Production and Development environment variables are configured. Preview environment variables
+should be added when preview branches are needed.
