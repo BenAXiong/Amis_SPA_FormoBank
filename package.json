@@ -1,0 +1,16 @@
+{
+  "name": "amis-mandarin-mt-review-demo",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev": "pnpm --filter @formobank/web dev",
+    "build": "pnpm --filter @formobank/web build",
+    "lint": "pnpm --filter @formobank/web lint",
+    "typecheck": "pnpm --filter @formobank/web typecheck && pnpm --filter @formobank/shared typecheck",
+    "test": "pnpm --filter @formobank/shared test"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
+  }
+}
