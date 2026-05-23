@@ -90,8 +90,8 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[#f3f2ed] text-[#161d1a]">
-      <section className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-3 py-3 sm:px-5 sm:py-5 lg:px-6">
+    <main className="flex min-h-[100dvh] bg-[#f3f2ed] text-[#161d1a]">
+      <section className="mx-auto flex h-[95dvh] w-full max-w-5xl flex-col px-3 py-3 sm:px-5 sm:py-5 lg:px-6">
         {!fixedDirectionId ? (
           <div
             className="grid grid-cols-2 gap-2 rounded-lg bg-[#202621] p-1 shadow-sm"
@@ -121,9 +121,11 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
           </div>
         ) : null}
 
-        <div className={`${fixedDirectionId ? "mt-0" : "mt-3"} grid flex-1 gap-3 lg:grid-cols-2`}>
+        <div
+          className={`${fixedDirectionId ? "mt-0" : "mt-3"} grid min-h-0 flex-1 grid-rows-2 gap-3 lg:grid-cols-2 lg:grid-rows-1`}
+        >
           <label
-            className={`flex min-h-[34vh] flex-col overflow-hidden rounded-lg border border-[#c9cdc6] bg-white shadow-sm lg:min-h-0 ${
+            className={`flex min-h-0 flex-col overflow-hidden rounded-lg border border-[#c9cdc6] bg-white shadow-sm ${
               fixedDirectionId ? "lg:mt-0" : ""
             }`}
           >
@@ -138,9 +140,9 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
 
           <section
             aria-label="譯文"
-            className="relative flex min-h-[34vh] flex-col overflow-hidden rounded-lg border border-[#c9cdc6] bg-[#fbfbf8] shadow-sm lg:min-h-0"
+            className="relative flex min-h-0 flex-col overflow-hidden rounded-lg border border-[#c9cdc6] bg-[#fbfbf8] shadow-sm"
           >
-            <div className="min-h-0 flex-1 overflow-y-auto p-4 text-lg leading-8 text-[#161d1a] sm:text-xl">
+            <div className="min-h-0 flex-1 overflow-y-auto p-4 pb-8 text-lg leading-8 text-[#161d1a] sm:text-xl">
               {translation ? (
                 <p className="whitespace-pre-wrap">{translation}</p>
               ) : (
