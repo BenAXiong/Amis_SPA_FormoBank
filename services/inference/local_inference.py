@@ -24,7 +24,12 @@ MODEL_ID = os.getenv("MODEL_ID", "FormosanBank/nllb200-formosan-zh")
 MODEL_VERSION = os.getenv("MODEL_VERSION")
 MAX_INPUT_CHARS = int(os.getenv("MAX_INPUT_CHARS", "800"))
 MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "160"))
-SUPPORTED_LANG = Literal["ami_Latn", "zho_Hant"]
+SUPPORTED_LANG = Literal["ami_Latn", "tay_Latn", "zho_Hant"]
+PROMPT_LANG_CODES = {
+    "ami_Latn": "ami",
+    "tay_Latn": "tay",
+    "zho_Hant": "zh",
+}
 
 app = FastAPI(title="Local Amis-Mandarin MT Inference")
 auth_scheme = HTTPBearer(auto_error=False)
@@ -82,11 +87,11 @@ def model_id_for_direction(source_lang: str, target_lang: str) -> str:
 
 
 def format_prompt(text: str, source_lang: str, target_lang: str) -> str:
-    if source_lang == "ami_Latn" and target_lang == "zho_Hant":
-        return f"<to_zh> <src_ami> <dom_unknown> <dialect_default> {text}"
+    source_code = PROMPT_LANG_CODES.get(source_lang)
+    target_code = PROMPT_LANG_CODES.get(target_lang)
 
-    if source_lang == "zho_Hant" and target_lang == "ami_Latn":
-        return f"<to_ami> <src_zh> <dom_unknown> <dialect_default> {text}"
+    if source_code and target_code and source_lang != target_lang:
+        return f"<to_{target_code}> <src_{source_code}> <dom_unknown> <dialect_default> {text}"
 
     raise ValueError(f"Unsupported direction: {source_lang}->{target_lang}")
 
@@ -104,10 +109,12 @@ def model_info() -> dict[str, object]:
         "license": "CC-BY-NC-4.0",
         "runtimeModelIds": {
             "ami_Latn->zho_Hant": F2ZH_MODEL_ID,
+            "tay_Latn->zho_Hant": F2ZH_MODEL_ID,
             "zho_Hant->ami_Latn": ZH2F_MODEL_ID,
+            "zho_Hant->tay_Latn": ZH2F_MODEL_ID,
         },
-        "sourceLangs": ["ami_Latn", "zho_Hant"],
-        "targetLangs": ["ami_Latn", "zho_Hant"],
+        "sourceLangs": ["ami_Latn", "tay_Latn", "zho_Hant"],
+        "targetLangs": ["ami_Latn", "tay_Latn", "zho_Hant"],
     }
 
 

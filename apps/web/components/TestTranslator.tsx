@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import type { LanguageDirectionId, TranslateResponse } from "@formobank/shared";
+import type { LanguageDirectionId, SupportedLang, TranslateResponse } from "@formobank/shared";
 import { LANGUAGE_DIRECTIONS, MAX_INPUT_CHARS, getDirectionById } from "@formobank/shared";
 
 type TestTranslatorProps = {
   fixedDirectionId?: LanguageDirectionId;
+  fixedPair?: {
+    sourceLang: SupportedLang;
+    targetLang: SupportedLang;
+  };
 };
 
 const compactDirectionLabels: Record<LanguageDirectionId, string> = {
@@ -13,7 +17,7 @@ const compactDirectionLabels: Record<LanguageDirectionId, string> = {
   "zh-to-ami": "中文 -> Amis",
 };
 
-export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
+export function TestTranslator({ fixedDirectionId, fixedPair }: TestTranslatorProps) {
   const [directionId, setDirectionId] = useState<LanguageDirectionId>(
     fixedDirectionId ?? "ami-to-zh",
   );
@@ -22,13 +26,17 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
   const [error, setError] = useState<string | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
 
-  const direction = getDirectionById(directionId);
+  const selectedDirection = getDirectionById(directionId);
+  const fixedDirection = fixedDirectionId ? getDirectionById(fixedDirectionId) : null;
+  const sourceLang = fixedPair?.sourceLang ?? fixedDirection?.sourceLang ?? selectedDirection.sourceLang;
+  const targetLang = fixedPair?.targetLang ?? fixedDirection?.targetLang ?? selectedDirection.targetLang;
+  const hasFixedPair = Boolean(fixedPair || fixedDirection);
   const remaining = MAX_INPUT_CHARS - sourceText.length;
   const tooLong = remaining < 0;
   const canTranslate = sourceText.trim().length > 0 && !tooLong && !isTranslating;
 
   function handleDirectionChange(nextDirectionId: LanguageDirectionId) {
-    if (fixedDirectionId) {
+    if (hasFixedPair) {
       return;
     }
 
@@ -62,8 +70,8 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
         },
         body: JSON.stringify({
           text: trimmed,
-          sourceLang: direction.sourceLang,
-          targetLang: direction.targetLang,
+          sourceLang,
+          targetLang,
         }),
       });
 
@@ -92,7 +100,7 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
   return (
     <main className="flex min-h-[100dvh] bg-[#f3f2ed] text-[#161d1a]">
       <section className="mx-auto flex h-[95dvh] w-full max-w-5xl flex-col px-3 py-3 sm:px-5 sm:py-5 lg:px-6">
-        {!fixedDirectionId ? (
+        {!hasFixedPair ? (
           <div
             className="grid grid-cols-2 gap-2 rounded-lg bg-[#202621] p-1 shadow-sm"
             role="tablist"
@@ -122,11 +130,11 @@ export function TestTranslator({ fixedDirectionId }: TestTranslatorProps) {
         ) : null}
 
         <div
-          className={`${fixedDirectionId ? "mt-0" : "mt-3"} grid min-h-0 flex-1 grid-rows-2 gap-3 lg:grid-cols-2 lg:grid-rows-1`}
+          className={`${hasFixedPair ? "mt-0" : "mt-3"} grid min-h-0 flex-1 grid-rows-2 gap-3 lg:grid-cols-2 lg:grid-rows-1`}
         >
           <label
             className={`flex min-h-0 flex-col overflow-hidden rounded-lg border border-[#c9cdc6] bg-white shadow-sm ${
-              fixedDirectionId ? "lg:mt-0" : ""
+              hasFixedPair ? "lg:mt-0" : ""
             }`}
           >
             <textarea

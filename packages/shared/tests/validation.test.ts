@@ -12,9 +12,11 @@ import {
 import { feedbackPayloadSchema } from "../src/validation";
 
 describe("language pair validation", () => {
-  it("accepts the two supported directions", () => {
+  it("accepts supported Amis and Atayal directions", () => {
     expect(isSupportedLanguagePair("ami_Latn", "zho_Hant")).toBe(true);
     expect(isSupportedLanguagePair("zho_Hant", "ami_Latn")).toBe(true);
+    expect(isSupportedLanguagePair("tay_Latn", "zho_Hant")).toBe(true);
+    expect(isSupportedLanguagePair("zho_Hant", "tay_Latn")).toBe(true);
   });
 
   it("rejects unsupported directions", () => {

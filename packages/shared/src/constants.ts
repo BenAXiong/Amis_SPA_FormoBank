@@ -31,26 +31,46 @@ export const LANGUAGE_DIRECTIONS = [
   },
 ] as const;
 
+export const SUPPORTED_TRANSLATION_PAIRS = [
+  {
+    sourceLang: "ami_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "ami_Latn",
+  },
+  {
+    sourceLang: "tay_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "tay_Latn",
+  },
+] as const;
+
 export type LanguageDirection = (typeof LANGUAGE_DIRECTIONS)[number];
 export type LanguageDirectionId = LanguageDirection["id"];
-export type SupportedLang = LanguageDirection["sourceLang"] | LanguageDirection["targetLang"];
+export type TranslationPair = (typeof SUPPORTED_TRANSLATION_PAIRS)[number];
+export type SupportedLang = TranslationPair["sourceLang"] | TranslationPair["targetLang"];
 
 export function getDirectionById(id: LanguageDirectionId): LanguageDirection {
   return LANGUAGE_DIRECTIONS.find((direction) => direction.id === id) ?? LANGUAGE_DIRECTIONS[0];
 }
 
 export function isSupportedLanguagePair(sourceLang: string, targetLang: string): boolean {
-  return LANGUAGE_DIRECTIONS.some(
-    (direction) => direction.sourceLang === sourceLang && direction.targetLang === targetLang,
+  return SUPPORTED_TRANSLATION_PAIRS.some(
+    (pair) => pair.sourceLang === sourceLang && pair.targetLang === targetLang,
   );
 }
 
 export function getRuntimeModelId(sourceLang: string, targetLang: string): string {
-  if (sourceLang === "ami_Latn" && targetLang === "zho_Hant") {
+  if (targetLang === "zho_Hant") {
     return FORMOSAN_TO_ZH_MODEL_ID;
   }
 
-  if (sourceLang === "zho_Hant" && targetLang === "ami_Latn") {
+  if (sourceLang === "zho_Hant") {
     return ZH_TO_FORMOSAN_MODEL_ID;
   }
 
