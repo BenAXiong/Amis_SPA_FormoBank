@@ -17,6 +17,10 @@ describe("language pair validation", () => {
     expect(isSupportedLanguagePair("zho_Hant", "ami_Latn")).toBe(true);
     expect(isSupportedLanguagePair("tay_Latn", "zho_Hant")).toBe(true);
     expect(isSupportedLanguagePair("zho_Hant", "tay_Latn")).toBe(true);
+    expect(isSupportedLanguagePair("zho_Hant", "bnn_Latn")).toBe(true);
+    expect(isSupportedLanguagePair("zho_Hant", "pyu_Latn")).toBe(true);
+    expect(isSupportedLanguagePair("zho_Hant", "pwn_Latn")).toBe(true);
+    expect(isSupportedLanguagePair("zho_Hant", "dru_Latn")).toBe(true);
   });
 
   it("rejects unsupported directions", () => {

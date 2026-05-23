@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   description: "Fixed-direction Chinese to Amis draft translation surface.",
 };
 
-export default function ZhPage() {
+export default function ZhAmiPage() {
   return <TestTranslator fixedDirectionId="zh-to-ami" />;
 }

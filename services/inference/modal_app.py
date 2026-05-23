@@ -18,9 +18,21 @@ MODEL_ID = os.getenv("MODEL_ID", "FormosanBank/nllb200-formosan-zh")
 MODEL_VERSION = os.getenv("MODEL_VERSION")
 MAX_INPUT_CHARS = int(os.getenv("MAX_INPUT_CHARS", "800"))
 MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "160"))
-SUPPORTED_LANG = Literal["ami_Latn", "tay_Latn", "zho_Hant"]
+SUPPORTED_LANG = Literal[
+    "ami_Latn",
+    "bnn_Latn",
+    "dru_Latn",
+    "pwn_Latn",
+    "pyu_Latn",
+    "tay_Latn",
+    "zho_Hant",
+]
 PROMPT_LANG_CODES = {
     "ami_Latn": "ami",
+    "bnn_Latn": "bnn",
+    "dru_Latn": "dru",
+    "pwn_Latn": "pwn",
+    "pyu_Latn": "pyu",
     "tay_Latn": "tay",
     "zho_Hant": "zh",
 }
@@ -126,12 +138,36 @@ def web():
             "license": "CC-BY-NC-4.0",
             "runtimeModelIds": {
                 "ami_Latn->zho_Hant": F2ZH_MODEL_ID,
+                "bnn_Latn->zho_Hant": F2ZH_MODEL_ID,
+                "dru_Latn->zho_Hant": F2ZH_MODEL_ID,
+                "pwn_Latn->zho_Hant": F2ZH_MODEL_ID,
+                "pyu_Latn->zho_Hant": F2ZH_MODEL_ID,
                 "tay_Latn->zho_Hant": F2ZH_MODEL_ID,
                 "zho_Hant->ami_Latn": ZH2F_MODEL_ID,
+                "zho_Hant->bnn_Latn": ZH2F_MODEL_ID,
+                "zho_Hant->dru_Latn": ZH2F_MODEL_ID,
+                "zho_Hant->pwn_Latn": ZH2F_MODEL_ID,
+                "zho_Hant->pyu_Latn": ZH2F_MODEL_ID,
                 "zho_Hant->tay_Latn": ZH2F_MODEL_ID,
             },
-            "sourceLangs": ["ami_Latn", "tay_Latn", "zho_Hant"],
-            "targetLangs": ["ami_Latn", "tay_Latn", "zho_Hant"],
+            "sourceLangs": [
+                "ami_Latn",
+                "bnn_Latn",
+                "dru_Latn",
+                "pwn_Latn",
+                "pyu_Latn",
+                "tay_Latn",
+                "zho_Hant",
+            ],
+            "targetLangs": [
+                "ami_Latn",
+                "bnn_Latn",
+                "dru_Latn",
+                "pwn_Latn",
+                "pyu_Latn",
+                "tay_Latn",
+                "zho_Hant",
+            ],
         }
 
     @web_app.post("/translate", dependencies=[Depends(require_auth)])

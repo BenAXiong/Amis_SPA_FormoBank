@@ -45,8 +45,40 @@ export const SUPPORTED_TRANSLATION_PAIRS = [
     targetLang: "zho_Hant",
   },
   {
+    sourceLang: "bnn_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
+    sourceLang: "pyu_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
+    sourceLang: "pwn_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
+    sourceLang: "dru_Latn",
+    targetLang: "zho_Hant",
+  },
+  {
     sourceLang: "zho_Hant",
     targetLang: "tay_Latn",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "bnn_Latn",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "pyu_Latn",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "pwn_Latn",
+  },
+  {
+    sourceLang: "zho_Hant",
+    targetLang: "dru_Latn",
   },
 ] as const;
 
